@@ -9,9 +9,8 @@ window.onload = function(){
 	    
 	    if (str.trim() == "")
 	    {
-	        convertedString = "FEL! Du måste ange en text.";
-	        return convertedString;
-	    }
+	        throw new Error("FEL! Du måste ange en text.");
+        }
 	    
 	    
 	    for (var i=0; i<str.length; i++)
@@ -36,11 +35,7 @@ window.onload = function(){
                 convertedString += c.toUpperCase();
                 continue;
             }
-	       
-	        /*else
-	        {
-                convertedString += c;
-	        }*/
+	      
 	    }
 	    
 	    return convertedString;
