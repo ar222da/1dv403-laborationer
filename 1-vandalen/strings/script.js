@@ -4,6 +4,47 @@ window.onload = function(){
 
 	// I denna funktion ska du skriva koden för att hantera "spelet"
 	var convertString = function(str){
+	    
+	    var convertedString = "";
+	    
+	    if (str.trim() == "")
+	    {
+	        convertedString = "FEL! Du måste ange en text.";
+	        return convertedString;
+	    }
+	    
+	    
+	    for (var i=0; i<str.length; i++)
+	    {
+	            
+            var c = str[i];
+            
+            if (c === "a" || c==="A")
+            {
+                convertedString +="#";
+                continue;
+            }
+            
+            if (c === c.toUpperCase())
+            {
+               convertedString += c.toLowerCase();
+               continue;
+            }
+                
+            if (c === c.toLowerCase())
+            {
+                convertedString += c.toUpperCase();
+                continue;
+            }
+	       
+	        /*else
+	        {
+                convertedString += c;
+	        }*/
+	    }
+	    
+	    return convertedString;
+	    
 		// Plats för förändring.		
 		// Returnera den konverterade strängen.
 		// Vid fel, kasta ett undantag med ett meddelande till användaren. 
