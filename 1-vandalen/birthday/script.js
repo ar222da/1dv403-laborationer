@@ -19,6 +19,7 @@ window.onload = function(){
         bdim.setMinutes(0);                     // som har skapats som ett 
         bdim.setSeconds(0);                     // date-objekt
         bdim.setMilliseconds(0);
+                                                // eftersom vi arbetar enbart med datum
 
         
         var y = date[0] + date[1] + date[2] + date[3];  // Hämta datumet från

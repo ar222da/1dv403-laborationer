@@ -33,7 +33,7 @@ var makePerson = function(persArr) {
     
     var SortedAges = Ages.sort();               // Sortera åldrarna.
    
-    var LowestAge = SortedAges[0];              // Den lägsta ålderna hamnar
+    var LowestAge = SortedAges[0];              // Den lägsta åldern hamnar
                                                 // först i ålderarrayen
                                                 
     var HighestAge = SortedAges[NumberOfObjects-1];
