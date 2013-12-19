@@ -1,0 +1,107 @@
+#container
+{
+    margin: 0 auto;
+    width: 600px;
+    height: 500px;
+    background-color: rgb(195,217,255);
+    padding: 0;
+    font-family: verdana;
+}
+
+#top
+{
+    font-family: arial;
+    text-align: center;
+    color: rgb(51,153,204);
+}
+
+#maincontent
+{
+    margin: 0 auto;
+    /*background-color: white;*/
+    width: 500px;
+    height: 400px;
+}
+
+#messages 
+{
+    overflow: auto;
+    height: 250px;
+    background-color:white;
+}
+
+#messages li
+{
+    padding: 10px;
+    border-style: solid;
+    border-width: 1px;
+    list-style-type: none;
+    margin-bottom: 10px;
+    color: rgb(149,149,129);
+    background-color: rgb(235,205,139);
+    font-weight: bold;
+}
+
+.delete
+{
+    background-image: url(delete.png);
+    background-size: 15px 15px;
+    background-position: right;
+    float: right;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+}
+
+.date
+{
+    background-image: url(date.png);
+    background-size: 15px 15px;
+    background-position: right;
+    float: right;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+}
+
+#time
+{
+    text-align: right;
+    font-size: 0.7em;
+    font-weight: normal;
+}
+
+#messagecounter
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: right;
+    font-size: 0.7em;
+}
+
+/*#messagebox
+{
+    margin-top: 100px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 11px;
+    width: 500px;
+    height: 100px;
+
+}*/
+
+#text
+{
+    width: 495px;
+    height: 100px;
+    border: none;
+}
+
+#messagebutton
+{
+    /*margin: 0 auto;*/
+    margin-top: 10px;
+    float:right;
+}
