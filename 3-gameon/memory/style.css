@@ -1,0 +1,13 @@
+p 
+{
+    margin: 0;
+    float: left;
+
+}
+
+.row
+{
+    border: 1px solid;
+    float: left;
+    margin-right: 10px;
+}
