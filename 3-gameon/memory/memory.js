@@ -6,12 +6,8 @@ var Memory = {
     columns: 4,
     arraycheck: [],
     arraycheckid: [],
-    checkcounter: 0,
     imagesshown: 0,
-    first: 0,
-    firstid: 0,
-    second: 0,
-    secondid: 0,
+    
     turns: 0,
     
     init: function(e)
@@ -26,25 +22,32 @@ var Memory = {
     
     hej: function(id)
     {
-        //var image = document.getElementById(id);
-        
-        //Memory.arraycheck[Memory.checkcounter] = Memory.memoryarray[id];
-        //Memory.arraycheckid[Memory.checkcounter] = id;
-        
-        Memory.arraycheck.push(Memory.memoryarray[id]);
-        Memory.arraycheckid.push(id);
-        var lastelement = Memory.arraycheck.length - 1;
-        
-        
-        
-            if (Memory.arraycheck[lastelement] == Memory.arraycheck[lastelement-1] && Memory.arraycheckid[lastelement] != Memory.arraycheckid[lastelement-1])
-            {
-                
-            }
-        
-        
-  
         if (Memory.imagesshown < 2)
+        {
+            var image = document.getElementById(id);
+            image.src = "pics/" + Memory.memoryarray[id] + ".png";
+            Memory.imagesshown++;
+            
+            setTimeout(function(){image.src = "pics/0.png", Memory.imagesshown--}, 1000);
+            
+            Memory.arraycheck.push(Memory.memoryarray[id]);
+            Memory.arraycheckid.push(id);
+            var lastelement = Memory.arraycheck.length - 1;
+            
+    
+                if ((Memory.arraycheck[lastelement] == Memory.arraycheck[lastelement-1]) && (Memory.arraycheckid[lastelement] != Memory.arraycheckid[lastelement-1]))
+                {
+                    alert("Grattis!");
+                    var image1 = document.getElementById(Memory.arraycheckid[lastelement]);
+                    image1.src = "pics/" + Memory.memoryarray[Memory.arraycheckid[lastelement]] + ".png";
+                    var image2 = document.getElementById(Memory.arraycheckid[lastelement-1]);
+                    image2.src = "pics/" + Memory.memoryarray[Memory.arraycheckid[lastelement-1]] + ".png";
+                    
+                }
+            
+        }
+  
+        /*if (Memory.imagesshown < 2)
         {
             if (Memory.imagesshown == 0)
             {
@@ -59,7 +62,7 @@ var Memory = {
                 Memory.secondid = id;
                 console.log("Second" + Memory.second);
             }
-            
+          
             
             var image = document.getElementById(id);
             image.src = "pics/" + Memory.memoryarray[id] + ".png";
@@ -77,7 +80,7 @@ var Memory = {
             Memory.imagesshown--}, 1000);
         }
         
-        
+        */
     },
     
     drawPictures: function()
