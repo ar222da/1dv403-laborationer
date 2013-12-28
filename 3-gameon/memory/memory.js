@@ -2,10 +2,12 @@
 var Memory = {
     
     memoryarray: [],
-      
+    rows: 4,
+    columns: 4,
+    
     init: function(e)
     {
-        this.memoryarray = RandomGenerator.getPictureArray(4,6);
+        this.memoryarray = RandomGenerator.getPictureArray(this.rows,this.columns);
     },
     
     getPictures: function()
@@ -13,34 +15,46 @@ var Memory = {
         return this.memoryarray;
     },
     
+    hej: function()
+    {
+        alert("Hej!");
+    },
+    
     drawPictures: function()
     {
-        var cont = document.getElementById("container");
+        var content = document.getElementById("container");
+        var row;
         var box;
-        var row = document.createElement("div");
-        row.className = "row";
-        var rowcounter = 0;
-        row.id = rowcounter;
-            
-        for (var x=1; x=this.memoryarray.length; x++)
+        var boxcounter = 0;
+        var image;
+        
+        for (var y=0; y < this.rows; y++)
         {
-            
-            if (x % (this.memoryarray.length/4) == 0)
-            {
-                cont.appendChild(row);
-                rowcounter++;
-                row = document.createElement("div");
-            }
-            
-            box = document.createElement("p");
-            box.id = x;
-            box.innerHTML=this.memoryarray[x];
+            row = document.createElement("div");
             row.className = "row";
-            row.id = rowcounter;
-            row.appendChild(box);
+            
+                for (var x=0; x < this.columns; x++)
+                {
+                    box = document.createElement("a");
+                    box.value = Memory.memoryarray[boxcounter];
+                    image = document.createElement("img");
+                    image.src = "pics/0.png";
+                    image.id = boxcounter;
+                    
+                    image.onclick= function (){
+                        this.src = "pics/" + this.parentNode.value + ".png";
+                    }
+                    
+                    box.appendChild(image);
+                    row.appendChild(box);
+                    boxcounter++;
+                }
+            
+            content.appendChild(row);
+        
         }
         
-        cont.appendChild(row);
+        
     }
     
 }
