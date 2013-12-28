@@ -4,6 +4,15 @@ var Memory = {
     memoryarray: [],
     rows: 4,
     columns: 4,
+    arraycheck: [],
+    arraycheckid: [],
+    checkcounter: 0,
+    imagesshown: 0,
+    first: 0,
+    firstid: 0,
+    second: 0,
+    secondid: 0,
+    turns: 0,
     
     init: function(e)
     {
@@ -15,9 +24,60 @@ var Memory = {
         return this.memoryarray;
     },
     
-    hej: function()
+    hej: function(id)
     {
-        alert("Hej!");
+        //var image = document.getElementById(id);
+        
+        //Memory.arraycheck[Memory.checkcounter] = Memory.memoryarray[id];
+        //Memory.arraycheckid[Memory.checkcounter] = id;
+        
+        Memory.arraycheck.push(Memory.memoryarray[id]);
+        Memory.arraycheckid.push(id);
+        var lastelement = Memory.arraycheck.length - 1;
+        
+        
+        
+            if (Memory.arraycheck[lastelement] == Memory.arraycheck[lastelement-1] && Memory.arraycheckid[lastelement] != Memory.arraycheckid[lastelement-1])
+            {
+                
+            }
+        
+        
+  
+        if (Memory.imagesshown < 2)
+        {
+            if (Memory.imagesshown == 0)
+            {
+                Memory.first = Memory.memoryarray[id];
+                Memory.firstid = id;
+                console.log("First" + Memory.first);
+            }
+        
+            if (Memory.imagesshown == 1)
+            {
+                Memory.second = Memory.memoryarray[id];
+                Memory.secondid = id;
+                console.log("Second" + Memory.second);
+            }
+            
+            
+            var image = document.getElementById(id);
+            image.src = "pics/" + Memory.memoryarray[id] + ".png";
+            Memory.imagesshown++;
+        
+            setTimeout(function(){image.src = "pics/0.png"; 
+            
+            if (Memory.first == Memory.second && Memory.firstid != Memory.secondid)
+            {
+                alert("Grattis!");
+            }
+
+            
+            
+            Memory.imagesshown--}, 1000);
+        }
+        
+        
     },
     
     drawPictures: function()
@@ -36,13 +96,13 @@ var Memory = {
                 for (var x=0; x < this.columns; x++)
                 {
                     box = document.createElement("a");
-                    box.value = Memory.memoryarray[boxcounter];
                     image = document.createElement("img");
                     image.src = "pics/0.png";
                     image.id = boxcounter;
                     
-                    image.onclick= function (){
-                        this.src = "pics/" + this.parentNode.value + ".png";
+                    image.onclick= function ()
+                    {
+                        Memory.hej(this.id);
                     }
                     
                     box.appendChild(image);
