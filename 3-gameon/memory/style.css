@@ -54,21 +54,27 @@ table {
 
 a
 {
-    height: 20px;
-    width: 20px;
-    padding: 0;
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    border: 1px solid;
+}
+
+a:hover
+{
+    border-color: yellow;
 }
 
 img
 {
-    height: 20px;
-    width: 20px;
+    height: 15px;
+    width: 15px;
 }
 
 .row
 {
     clear: both;
-   
+    margin: 10px;
     padding: 0;
-    height: 20px;
+    
 }
