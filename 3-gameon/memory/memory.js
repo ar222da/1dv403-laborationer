@@ -22,14 +22,16 @@ var Memory = {
     
     hej: function(id)
     {
-        if (Memory.imagesshown < 2)
+          var image = document.getElementById(id);
+         
+        if (Memory.imagesshown < 2) 
         {
-            var image = document.getElementById(id);
             image.src = "pics/" + Memory.memoryarray[id] + ".png";
             Memory.imagesshown++;
-            
+         
+           
             setTimeout(function(){image.src = "pics/0.png", Memory.imagesshown--}, 1000);
-            
+  
             Memory.arraycheck.push(Memory.memoryarray[id]);
             Memory.arraycheckid.push(id);
             var lastelement = Memory.arraycheck.length - 1;
@@ -38,49 +40,22 @@ var Memory = {
                 if ((Memory.arraycheck[lastelement] == Memory.arraycheck[lastelement-1]) && (Memory.arraycheckid[lastelement] != Memory.arraycheckid[lastelement-1]))
                 {
                     alert("Grattis!");
-                    var image1 = document.getElementById(Memory.arraycheckid[lastelement]);
-                    image1.src = "pics/" + Memory.memoryarray[Memory.arraycheckid[lastelement]] + ".png";
-                    var image2 = document.getElementById(Memory.arraycheckid[lastelement-1]);
-                    image2.src = "pics/" + Memory.memoryarray[Memory.arraycheckid[lastelement-1]] + ".png";
+                    var i = Memory.arraycheckid[lastelement];
+                    var ib = Memory.arraycheckid[lastelement-1];
+                    var image1 = document.getElementById(i);
+                    image1.setAttribute("src", "pics/" + Memory.memoryarray[Memory.arraycheckid[lastelement]] + ".png")
+                    image1.value = -1;
                     
+                    var image2 = document.getElementById(ib);
+                    image2.setAttribute("src", "pics/" + Memory.memoryarray[Memory.arraycheckid[lastelement]] + ".png")
+                    image2.value = -1;
+                    
+                    console.log(Memory.arraycheckid[lastelement]);
+                    console.log(Memory.arraycheckid[lastelement-1]);
                 }
             
         }
   
-        /*if (Memory.imagesshown < 2)
-        {
-            if (Memory.imagesshown == 0)
-            {
-                Memory.first = Memory.memoryarray[id];
-                Memory.firstid = id;
-                console.log("First" + Memory.first);
-            }
-        
-            if (Memory.imagesshown == 1)
-            {
-                Memory.second = Memory.memoryarray[id];
-                Memory.secondid = id;
-                console.log("Second" + Memory.second);
-            }
-          
-            
-            var image = document.getElementById(id);
-            image.src = "pics/" + Memory.memoryarray[id] + ".png";
-            Memory.imagesshown++;
-        
-            setTimeout(function(){image.src = "pics/0.png"; 
-            
-            if (Memory.first == Memory.second && Memory.firstid != Memory.secondid)
-            {
-                alert("Grattis!");
-            }
-
-            
-            
-            Memory.imagesshown--}, 1000);
-        }
-        
-        */
     },
     
     drawPictures: function()
@@ -98,32 +73,41 @@ var Memory = {
             
                 for (var x=0; x < this.columns; x++)
                 {
-                    box = document.createElement("a");
-                    image = document.createElement("img");
-                    image.src = "pics/0.png";
-                    image.id = boxcounter;
                     
-                    image.onclick= function ()
-                    {
-                        Memory.hej(this.id);
-                    }
+                        box = document.createElement("a");
+                        image = document.createElement("img");
+                        image.src = "pics/0.png";
+                        image.id = boxcounter;
+                      
+                        image.onclick= function ()
+                        {
+                            console.log(Memory.memoryarray);
+                           
+                            if (this.value != -1)
+                            {
+                                Memory.hej(this.id);
+                            }
+                        }
+                        
+                        box.appendChild(image);
+                        row.appendChild(box);
+                        boxcounter++;
+                   
                     
-                    box.appendChild(image);
-                    row.appendChild(box);
-                    boxcounter++;
                 }
             
             content.appendChild(row);
+           
         
         }
         
-        
+       
     }
     
 }
 
 window.onload = function(){
     Memory.init();
-    console.log(Memory.getPictures());
+    //console.log(Memory.getPictures());
     Memory.drawPictures();
 }
