@@ -54,10 +54,10 @@ table {
 
 a
 {
-    height: 40px;
-    width: 40px;
     margin-right: 10px;
+    margin-bottom: 10px;
     border: 1px solid;
+    font-size: 40px;
 }
 
 a:hover
@@ -67,14 +67,15 @@ a:hover
 
 img
 {
-    height: 15px;
-    width: 15px;
+    height: 25px;
+    width: 25px;
+   
 }
 
 .row
 {
     clear: both;
-    margin: 10px;
+    margin: 20px;
     padding: 0;
     
 }

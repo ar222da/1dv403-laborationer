@@ -3,7 +3,7 @@ var Memory = {
     
     memoryarray: [],
     rows: 4,
-    columns: 4,
+    columns: 2,
     arraycheck: [],
     arraycheckid: [],
     imagesshown: 0,
@@ -23,67 +23,46 @@ var Memory = {
     
     showPicture: function(id)
     {
-        
-        console.log(Memory.memoryarray);
-        console.log(Memory.turns);
-        Memory.arraycheck.push (Memory.memoryarray[id]);
+        Memory.imagesshown++;
+        Memory.turns++;
+        var image = document.getElementById(id);
+        image.firstChild.src = "pics/" + Memory.memoryarray[id] + ".png";
+        Memory.arraycheck.push(Memory.memoryarray[id]);
         Memory.arraycheckid.push(id);
-        var lastelement = Memory.arraycheckid.length-1;
-   
-        if (Memory.imagesshown == 0 || Memory.imagesshown == 1)
-        {
-            var box = document.getElementById(id);
-            box.firstChild.src = "pics/" + Memory.memoryarray[id] + ".png";
-                
-            if (id != Memory.arraycheckid[lastelement-1] || Memory.imagesshown == 0)
-            {
-                Memory.imagesshown++;
-            }
-            
-                if ((Memory.arraycheck[lastelement] == Memory.arraycheck[lastelement-1]) && (Memory.arraycheckid[lastelement] != Memory.arraycheckid[lastelement-1]))
-                {
-                    var foundbox = document.getElementById(Memory.arraycheckid[lastelement]);
-                    var foundboxb = document.getElementById(Memory.arraycheckid[lastelement-1]);
-                    foundbox.firstChild.src = "pics/" + Memory.arraycheck[lastelement] + ".png";
-                    foundbox.value = -1;
-                    foundboxb.firstChild.src = "pics/" + Memory.arraycheck[lastelement] + ".png";
-                    foundboxb.value = -1;
-                    Memory.imagesshown = 0;
-                    Memory.foundpairs++;
-                    //alert(foundbox.value + " " + foundboxb.value);
-                    
-                        if (Memory.foundpairs == Memory.memoryarray.length / 2)
-                        {
-                            alert("Grattis! Du klarade det på " + Memory.turns + " försök.");
-                           
-                        }
-                }
-
-            
         
-            else 
-            {
-                if (box.firstChild.value != -1)
+        setTimeout(function()
                 {
-                setTimeout(function()
-                {
-                    box.firstChild.src = "pics/0.png";
+                    if (image.value == 0){
+                    image.firstChild.src = "pics/0.png";
+                    Memory.imagesshown--;
+                    }
                     
-                    if (Memory.imagesshown > 0)
-                    {
-                        Memory.imagesshown--; 
+                    else{
+                    image.firstChild.src = "pics/" + Memory.memoryarray[id] + ".png";    
                     }
                     
                 }, 1000);
-                }
-            }       
+
+        var lastelement = Memory.arraycheck.length-1;
+   
+        if ((Memory.arraycheck.length > 1) && (Memory.arraycheck[lastelement] == Memory.arraycheck[lastelement-1]) && (Memory.arraycheckid[lastelement] != Memory.arraycheckid[lastelement-1]))
+        {
+            image.firstChild.src = "pics/" + Memory.memoryarray[id] + ".png";
+            image.value = 1;
             
-        
+            var prior = document.getElementById([Memory.arraycheckid[lastelement-1]]);
+            prior.firstChild.src = "pics/" + Memory.memoryarray[id] + ".png";
+            prior.value = 1;
+            Memory.imagesshown = 0;
+            Memory.foundpairs++;
+            Memory.turns--;
+            console.log(Memory.imagesshown);
         }
         
-        
-        
-  
+        if (Memory.foundpairs == Memory.memoryarray.length / 2)
+        {
+            alert("Grattis! Du klarade det på " + Memory.turns + " försök.");
+        }
     },
     
     drawPictures: function()
@@ -107,18 +86,17 @@ var Memory = {
                     box.value = 0;    
                     image = document.createElement("img");
                     image.src = "pics/0.png";
+                   
                     box.appendChild(image);
-                    
-                    box.onclick= function ()
-                    {
-                        if (this.value ==0)
+                  
+                        box.onclick= function ()
                         {
-                            console.log(this.value);
-                            Memory.turns++;
-                            Memory.showPicture(this.id);
+                            if (Memory.imagesshown < 2 && this.value == 0)   
+                            {                  
+                                Memory.showPicture(this.id);
+                            }
                         }
-                    }
-                    
+             
                     row.appendChild(box);
                     boxcounter++;
                
@@ -128,13 +106,11 @@ var Memory = {
            
         }
         
-       
     }
     
 }
 
 window.onload = function(){
     Memory.init();
-    //console.log(Memory.getPictures());
     Memory.drawPictures();
 }
