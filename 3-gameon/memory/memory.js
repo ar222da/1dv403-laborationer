@@ -3,7 +3,7 @@ var Memory = {
     
     memoryarray: [],
     rows: 4,
-    columns: 2,
+    columns: 4,
     arraycheck: [],
     arraycheckid: [],
     imagesshown: 0,
@@ -61,7 +61,10 @@ var Memory = {
         
         if (Memory.foundpairs == Memory.memoryarray.length / 2)
         {
-            alert("Grattis! Du klarade det på " + Memory.turns + " försök.");
+            var text = document.createElement("p");
+            text.innerHTML = "Grattis! Du klarade det på " + Memory.turns + " försök.";
+            var cont = document.getElementById("content");
+            cont.appendChild(text);
         }
     },
     

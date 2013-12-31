@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+            
+	<meta charset="UTF-8" />
+ 	<title>Validering</title>
+ 	<style>
+ 		.error {
+ 			background-color: #F7A1A1;
+ 		}
+ 	</style>
+ 	<link rel="stylesheet" href="style.css" /> 
+</head>
+
+    <body>
+    <div id="container">
+   
+        <form id="myForm" action="http://voyager.lnu.se/tekinet/kurser/dtt/wp_webbteknik/process_form.php" method="post">
+        <div>
+            <h1>Fyll i din betalningsplan</h1>
+            <label>
+            <span>Förnamn:</span><input id="firstname" type="text" name="firstname">
+            </label>
+            
+            <label>
+            <span>Efternamn:</span><input id="lastname" type="text" name="lastname">
+            </label>
+            
+            <label>
+            <span>Postnummer:</span><input id="postalcode" type="text" name="postalcode">
+            </label>
+            
+            <label>
+            <span>E-post:</span><input id="email" type="text" name="email">
+            </label>
+      
+            <label>
+            <span>Prismodell:</span><select id="pricemodel" name="pricemodel"><option value="low">Låg</option></select>    
+            </label>
+
+            <input type="submit" value="Genomför köp" class="submit">
+            
+        </div>
+        </form> 
+         
+      
+    </div>
+    
+    <script type="text/javascript" src="validator.js"></script>
+    </body>
+</html>
+
