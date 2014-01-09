@@ -18,25 +18,24 @@
         <form id="myForm" action="http://voyager.lnu.se/tekinet/kurser/dtt/wp_webbteknik/process_form.php" method="post">
         <div>
             <h1>Fyll i din betalningsplan</h1>
-            <label>
-            <span>Förnamn:</span><input id="firstname" type="text" name="firstname">
-            </label>
+            <ul>
             
-            <label>
-            <span>Efternamn:</span><input id="lastname" type="text" name="lastname">
-            </label>
-            
-            <label>
-            <span>Postnummer:</span><input id="postalcode" type="text" name="postalcode">
-            </label>
-            
-            <label>
-            <span>E-post:</span><input id="email" type="text" name="email">
-            </label>
-      
-            <label>
-            <span>Prismodell:</span><select id="pricemodel" name="pricemodel"><option value="low">Låg</option></select>    
-            </label>
+                <li>Förnamn: </li>
+                <li id="firstnamefield"><input id="firstname" type="text" name="firstname"></li>
+                
+                <li>Efternamn: </li>
+                <li id="lastnamefield"><input id="lastname" type="text" name="lastname"></li>
+                
+                <li>Postnummer: </li>
+                <li id="postalcodefield"><input id="postalcode" type="text" name="postalcode"></li>
+                
+                <li>E-post: </li>
+                <li id="emailfield"><input id="email" type="text" name="email"></li>
+                  
+                <li>Prismodell: </li>
+                <li><select id="pricemodel" name="pricemodel"><option value="low">Låg</option></select></li>
+                
+            </ul>
 
             <input type="submit" value="Genomför köp" class="submit">
             
