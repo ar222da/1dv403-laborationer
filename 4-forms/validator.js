@@ -1,121 +1,201 @@
 "use strict";
 var Validator = {
     
-  
-    validate: function(form)
+    firstName: false,
+    lastName: false,
+    postalCode: false,
+    email: false,
+    
+    
+    validateFirstName: function(input)
     {
-        var emptyErrorMessage = document.createTextNode("Detta fält får inte lämnas blankt."); // Själva felmeddelandet för för- och efternamn
-        var emptyErrorTag = document.createElement("p"); // P-taggen som texten ska stoppas i
-        emptyErrorTag.appendChild(emptyErrorMessage); // Texten stoppas i p-taggen 
-        
-        var firstName = document.getElementById("firstnamefield").lastChild; // Används vid den följande kontrollen 
-        
-            if (firstName.hasChildNodes()) // Kolla om ett felmeddelande redan skrivits ut vid förnamn-fältet, ta bort i så fall
-            {
-                firstName.remove(firstName.lastChild);
-            }
-
-        var lastName = document.getElementById("lastnamefield").lastChild; // Används vid den följande kontrollen
+        var firstNameField = document.getElementById("firstnamefield");
             
-            if (lastName.hasChildNodes()) // Kolla om ett felmeddelande redan skrivits ut vid efternamn-fältet, ta bort i så fall
-            {
-                lastName.remove(lastName.lastChild);
-            }
-        
-        var postalCode = document.getElementById("postalcodefield").lastChild;
-            
-            if (postalCode.hasChildNodes()) // Kolla om ett felmeddelande redan skrivits ut vid postnummer-fältet, ta bort i så fall
-            {
-                postalCode.remove(postalCode.lastChild);
-            }
-            
-        var email = document.getElementById("emailfield").lastChild;
-            
-            if (email.hasChildNodes()) // Kolla om ett felmeddelande redan skrivits ut vid email-fältet, ta bort i så fall
-            {
-                email.remove(email.lastChild);
-            }
-        
-
-        if (form.elements["firstname"].value.trim() == "") // Kontrollera att fältet är ifyllt
+        if (firstNameField.lastChild.hasChildNodes()) // Tar bort eventuellt utskrivet felmeddelande
         {
-            var firstNameField = document.getElementById("firstnamefield"); // Li-elementet som innehåller input-fältet
-            firstNameField.appendChild(emptyErrorTag); // Sätt till felmeddelandet bredvid input-fältet, alltså ett nytt barn i form av tidigare skapad p-tagg tillfogas li-elementet
-            return false;
+            firstNameField.lastChild.remove(firstNameField.lastChild);
         }
 
-        if (form.elements["lastname"].value.trim() == "") // Samma princip som ovan fast för efternamnet
+        
+        if (input.value.trim() == "")
         {
-            var lastNameField = document.getElementById("lastnamefield"); 
+            
+            var emptyErrorMessage = document.createTextNode("Detta fält får inte lämnas blankt."); // Själva felmeddelandet för för- och efternamn
+            var emptyErrorTag = document.createElement("p"); // P-taggen som texten ska stoppas i
+            emptyErrorTag.appendChild(emptyErrorMessage);
+            firstNameField.appendChild(emptyErrorTag);
+            Validator.firstName = false;
+        }
+        
+        else
+        {
+            Validator.firstName = true;
+        }
+ 
+    },
+    
+    validateLastName: function(input)
+    {
+        var lastNameField = document.getElementById("lastnamefield");
+            
+        if (lastNameField.lastChild.hasChildNodes()) // Tar bort eventuellt utskrivet felmeddelande
+        {
+            lastNameField.lastChild.remove(lastNameField.lastChild);
+        }
+
+        if (input.value.trim() == "")
+        {
+            
+            var emptyErrorMessage = document.createTextNode("Detta fält får inte lämnas blankt."); // Själva felmeddelandet för för- och efternamn
+            var emptyErrorTag = document.createElement("p"); // P-taggen som texten ska stoppas i
+            emptyErrorTag.appendChild(emptyErrorMessage);
             lastNameField.appendChild(emptyErrorTag);
-            return false;
+            Validator.lastName = false;
         }
         
-        if (form.elements["postalcode"].value.trim() == "")
+        else
         {
-            var postalCodeField = document.getElementById("postalcodefield");
+            Validator.lastName = true;
+        }
+
+    },
+    
+    validatePostalCode: function(input)
+    {
+        var postalCoderegExp = [];
+        postalCoderegExp[0] = /^[0-9]{5}$/;
+        postalCoderegExp[1] = /^[0-9]{3}-[0-9]{2}$/;
+        postalCoderegExp[2] = /^[0-9]{3}\s[0-9]{2}$/;
+        postalCoderegExp[3] = /^(SE)[0-9]{5}$/;
+        postalCoderegExp[4] = /^(SE)[0-9]{3}-[0-9]{2}$/;
+        postalCoderegExp[5] = /^(SE)[0-9]{3}\s[0-9]{2}$/;
+        postalCoderegExp[6] = /^(SE)\s[0-9]{5}$/;
+        postalCoderegExp[7] = /^(SE)\s[0-9]{3}-[0-9]{2}$/;
+        postalCoderegExp[8] = /^(SE)\s[0-9]{3}\s[0-9]{2}$/;
+
+        var postalCodeField = document.getElementById("postalcodefield");
+            
+        if (postalCodeField.lastChild.hasChildNodes()) // Tar bort eventuellt utskrivet felmeddelande
+        {
+            postalCodeField.lastChild.remove(postalCodeField.lastChild);
+        }
+
+        if (input.value.trim() == "")
+        {
+            var emptyErrorMessage = document.createTextNode("Detta fält får inte lämnas blankt."); // Själva felmeddelandet för för- och efternamn
+            var emptyErrorTag = document.createElement("p"); // P-taggen som texten ska stoppas i
+            emptyErrorTag.appendChild(emptyErrorMessage);
             postalCodeField.appendChild(emptyErrorTag);
-            return false;
+            Validator.postalCode = false;
         }
         
-        if (form.elements["email"].value.trim() == "")
+        else
         {
-            var emailField = document.getElementById("emailfield");
+            input.value = input.value.trim();
+            
+            var correctFormat = false;
+            for (var i=0; i < postalCoderegExp.length; i++)
+            {
+                if (input.value.match(postalCoderegExp[i]))
+                {
+                    input.value = input.value.replace(/\s+/g, '');
+                    input.value = input.value.replace(/(SE)/, '');
+                    input.value = input.value.replace(/-/, '');
+                    correctFormat = true;
+                    Validator.postalCode = true;
+                }
+            }
+            
+            if (!correctFormat)
+            {    
+                    postalCodeField = document.getElementById("postalcodefield");
+            
+                    if (postalCodeField.lastChild.hasChildNodes()) // Tar bort eventuellt utskrivet felmeddelande
+                    {
+                        postalCodeField.lastChild.remove(postalCodeField.lastChild);
+                    }
+
+                    var incorrectFormatMessage = document.createTextNode("Ogiltigt format");
+                    var incorrectFormatTag = document.createElement("p");
+                    incorrectFormatTag.appendChild(incorrectFormatMessage);
+                    postalCodeField.appendChild(incorrectFormatTag);
+                    Validator.postalCode = false;
+            }   
+           
+        }
+
+    },
+    
+    validateEmail: function(input)
+    {
+        var emailField = document.getElementById("emailfield");
+            
+        if (emailField.lastChild.hasChildNodes()) // Tar bort eventuellt utskrivet felmeddelande
+        {
+            emailField.lastChild.remove(emailField.lastChild);
+        }
+
+        if (input.value.trim() == "")
+        {
+            var emptyErrorMessage = document.createTextNode("Detta fält får inte lämnas blankt."); // Själva felmeddelandet för för- och efternamn
+            var emptyErrorTag = document.createElement("p"); // P-taggen som texten ska stoppas i
+            emptyErrorTag.appendChild(emptyErrorMessage);
             emailField.appendChild(emptyErrorTag);
-            return false;
+            Validator.email = false;
         }
         
-        
-        
-        
-        
-        
-        
-        
+        else
+        {
+            Validator.email = true;
+        }
+
     }
 
 }
 
 
 window.onload = function(){
-
+    
     var form = document.getElementById("myForm");
     
-    var postalCodeinputField = document.getElementById("postalcode");
-    var postalCoderegExp = [];
-    postalCoderegExp[0] = /^[0-9]{5}$/;
-    postalCoderegExp[1] = /^[0-9]{3}-[0-9]{2}$/;
-    postalCoderegExp[2] = /^[0-9]{3}\s[0-9]{2}$/;
-    postalCoderegExp[3] = /^(SE)[0-9]{5}$/;
-    postalCoderegExp[4] = /^(SE)[0-9]{3}-[0-9]{2}$/;
-    postalCoderegExp[5] = /^(SE)[0-9]{3}\s[0-9]{2}$/;
-    postalCoderegExp[6] = /^(SE)\s[0-9]{5}$/;
-    postalCoderegExp[7] = /^(SE)\s[0-9]{3}-[0-9]{2}$/;
-    postalCoderegExp[8] = /^(SE)\s[0-9]{3}\s[0-9]{2}$/;
+  
+    // Kontroll när användaren lämnar förnamn-fältet
+    var firstNameInput = document.getElementById("firstname");
+    firstNameInput.onblur = function ()
+    {
+        Validator.validateFirstName(firstNameInput);
+    }
+    
+    
+    // Kontroll när användaren lämnar efternamn-fältet
+    var lastNameInput = document.getElementById("lastname");
+    lastNameInput.onblur = function ()
+    {
+        Validator.validateLastName(lastNameInput);
+    }
 
-        postalCodeinputField.onblur = function ()
-        {
-            postalCodeinputField.value = postalCodeinputField.value.trim();
-            
-            for (var i=0; i < postalCoderegExp.length; i++)
-            {
-                if (postalCodeinputField.value.match(postalCoderegExp[i]))
-                {
-                    postalCodeinputField.value = postalCodeinputField.value.replace(/\s+/g, '');
-                    postalCodeinputField.value = postalCodeinputField.value.replace(/(SE)/, '');
-                    postalCodeinputField.value = postalCodeinputField.value.replace(/-/, '');
-                }
-            }
-            
-        }
+    // Kontroll när användaren lämnar postnummer-fält
+    var postalCodeInput = document.getElementById("postalcode");
+    postalCodeInput.onblur = function ()
+    {
+        Validator.validatePostalCode(postalCodeInput);    
+    }
+    
+    // Kontroll när användare lämnar email-fält
+    var emailInput = document.getElementById("email");
+    emailInput.onblur = function ()
+    {
+        Validator.validateEmail(emailInput);
+    }
+    
     
     form.onsubmit = function(e){
-        if (!Validator.validate(form))
+        console.log(Validator.firstName, Validator.lastName, Validator.postalCode, Validator.email);
+        if (!Validator.firstName || !Validator.lastName || !Validator.postalCode || !Validator.email)
         {
-            
-            
             return false;
         }
+        
     }
     
 }
