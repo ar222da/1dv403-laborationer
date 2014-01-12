@@ -146,7 +146,27 @@ var Validator = {
         
         else
         {
-            Validator.email = true;
+            input.value = input.value.trim();
+            if (input.value.match(/^[\w]+(\.[\w]+)*@([\w]+\.)+[a-z]{2,7}$/i))
+            {
+                Validator.email = true;
+            }
+            
+            else
+            {
+                emailField = document.getElementById("emailfield");
+            
+                    if (emailField.lastChild.hasChildNodes()) // Tar bort eventuellt utskrivet felmeddelande
+                    {
+                        emailField.lastChild.remove(emailField.lastChild);
+                    }
+
+                    var incorrectFormatMessage = document.createTextNode("Ogiltigt E-post");
+                    var incorrectFormatTag = document.createElement("p");
+                    incorrectFormatTag.appendChild(incorrectFormatMessage);
+                    emailField.appendChild(incorrectFormatTag);
+                    Validator.email = false;
+            }
         }
 
     }
@@ -194,6 +214,14 @@ window.onload = function(){
         if (!Validator.firstName || !Validator.lastName || !Validator.postalCode || !Validator.email)
         {
             return false;
+        }
+        
+        else
+        {
+            var background = document.createElement("div");
+            background.id = "background";
+            var container = document.getElementById("container");
+            container.appendChild(background);
         }
         
     }
