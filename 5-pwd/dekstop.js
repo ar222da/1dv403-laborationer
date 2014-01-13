@@ -78,20 +78,30 @@ var Desktop = {
                     var maxThumbHeight = thumbHeightArray[0];
                     
                     var box = document.createElement("div");
-                    box.style.width = maxThumbWidth + 4 + "px";
-                    box.style.height = maxThumbHeight + 4 + "px";
-                    box.style.backgroundColor = "yellow";
-                    box.style.border = "1px solid";
-                    
+                    box.style.width = maxThumbWidth + 20 + "px";
+                    box.style.height = maxThumbHeight + 20 + "px";
+                    box.style.backgroundColor = "#ff5667";
+                    box.style['margin-left'] = "30px";
+                    box.style['border-radius'] = "5px";
+                    var thumbWidth = obj[0].thumbWidth;
+                    var thumbHeight = obj[0].thumbHeight;
+                    var marginWidth = (((maxThumbWidth + 20) - thumbWidth) / 2);
+                    var marginHeight = (((maxThumbHeight + 20) - thumbHeight) / 2);
                     
                     var image = document.createElement("img");
                     image.src = obj[0].thumbURL;
-                    image.style.margin = "0 auto";
+                    image.style['margin-left'] = marginWidth + "px";
+                    image.style['margin-top'] = marginHeight + "px";
+                    
+                    var gall = document.getElementById("gallery");
+                    var back = document.getElementById("borderbackground");
+                    //gall.style.width = (box.style.width * 4) + 40 + "px";
+                    back.style.width = "50px";
+                    
                     
                     box.appendChild(image);
                     
-                    var gall = document.getElementById("gallery");
-                    gall.appendChild(box);
+                    gall.insertBefore(box, gall.lastChild);
                     
                 }
                 
