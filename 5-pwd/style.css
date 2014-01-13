@@ -109,9 +109,8 @@ table {
 {
     width: 20px;
     height: 20px;
+    background-image: url('close3.PNG');
     float: right;
-    background: yellow;
-
 }
 
 #bottombar

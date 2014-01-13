@@ -37,7 +37,7 @@ var Desktop = {
         var windowIcon = document.createElement("div");
         windowIcon.id = "windowicon";
         topBar.appendChild(windowIcon);
-        
+       
         var windowText = document.createTextNode("Image Viewer");
         var paragraph= document.createElement("p");
         paragraph.appendChild(windowText);
@@ -55,14 +55,29 @@ var Desktop = {
         document.body.appendChild(borderBackground);
         
         var xhr = new XMLHttpRequest();
+        
+        //setTimeout(function() 
+        //{
+            var bottomBarLoading = document.getElementById("bottombar");
+            var text = document.createElement("p");
+            text.id = "text";
+            text.innerHTML = "Laddar..."
+            bottomBarLoading.appendChild(text);
+        //}, 100);
+        
         xhr.onreadystatechange = function()
         {
+        
             if (xhr.readyState === 4)
             {
+                var bottomBarLoading = document.getElementById("bottombar");
+                    
+                    var text = document.getElementById("text");
+                    text.remove();
+                
                 if (xhr.status >=200 && xhr.status < 300 || xhr.status === 304)
                 {
                     var obj = JSON.parse(xhr.responseText);
-                    
                     var thumbWidthArray = [];
                     var thumbHeightArray = [];
                     
@@ -81,15 +96,17 @@ var Desktop = {
                         for (x = 0; x < obj.length; x++)
                         {
                             var box = document.createElement("div");
+                            box.value = obj[x].URL;
+                            
                             box.onclick = function() 
                                 {
-                                    Desktop.changeWallpaper(this.id);
+                                    Desktop.changeWallpaper(this.value);
                                 }
 
                             box.id = x;
                             box.style.width = maxThumbWidth + 20 + "px";
                             box.style.height = maxThumbHeight + 20 + "px";
-                            box.style.backgroundColor = "#ff5667";
+                            box.style.backgroundColor = "#9999FF";
                             box.style['border-radius'] = "5px";
                             box.style['margin-left'] = "10px";
                             box.style['margin-top'] = "10px";
@@ -98,27 +115,27 @@ var Desktop = {
                             var thumbHeight = obj[x].thumbHeight;
                             var marginWidth = (((maxThumbWidth + 20) - thumbWidth) / 2);
                             var marginHeight = (((maxThumbHeight + 20) - thumbHeight) / 2);
-                            gallery.insertBefore(box, gallery.lastChild);
+                            //gallery.insertBefore(box, gallery.lastChild);
+                            gallery.appendChild(box);
                             var image = document.createElement("img");
                             image.src = obj[x].thumbURL;
                             image.style['margin-left'] = marginWidth + "px";
                             image.style['margin-top'] = marginHeight + "px";
                             box.appendChild(image);
                             gallery.insertBefore(box, gallery.lastChild);
-                            
                         }
                 
-                    borderBackground.style.width = ((maxThumbWidth + 20) * 4) + 40 + 10 + 6 + "px";
-                    gallery.style.width = ((maxThumbWidth + 20) * 4) + 40 + 10 + "px";
-                    topBar.style.width = ((maxThumbWidth + 20) * 4) + 40 + 10 + "px";
-                    bottomBar.style.width = ((maxThumbWidth + 20) * 4) + 40 + 10 + "px";
+                    borderBackground.style.width = ((maxThumbWidth + 20) * 3) + 30 + 10 + 6 + "px";
+                    gallery.style.width = ((maxThumbWidth + 20) * 3) + 30 + 10 + "px";
+                    topBar.style.width = ((maxThumbWidth + 20) * 3) + 30 + 10 + "px";
+                    bottomBar.style.width = ((maxThumbWidth + 20) * 3) + 30 + 10 + "px";
                     
                     if (borderBackground.scrollHeight > borderBackground.clientHeight)
                     {
-                        borderBackground.style.width = ((maxThumbWidth + 20) * 4) + 57 + 10 + 6 + "px";
-                        gallery.style.width = ((maxThumbWidth + 20) * 4) + 57 + 10 + "px";
-                        topBar.style.width = ((maxThumbWidth + 20) * 4) + 57 + 10 + "px";
-                        bottomBar.style.width = ((maxThumbWidth + 20) * 4) + 57 + 10 + "px";
+                        borderBackground.style.width = ((maxThumbWidth + 20) * 3) + 47 + 10 + 6 + "px";
+                        gallery.style.width = ((maxThumbWidth + 20) * 3) + 47 + 10 + "px";
+                        topBar.style.width = ((maxThumbWidth + 20) * 3) + 47 + 10 + "px";
+                        bottomBar.style.width = ((maxThumbWidth + 20) * 3) + 47 + 10 + "px";
                         gallery.style['overflow-y'] = "scroll";
                     }
                 
@@ -137,35 +154,10 @@ var Desktop = {
         
     },
     
-    changeWallpaper: function(id)
+    changeWallpaper: function(url)
     {
-       var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function()
-        {
-            if (xhr.readyState === 4)
-            {
-                if (xhr.status >=200 && xhr.status < 300 || xhr.status === 304)
-                {
-                    var obj = JSON.parse(xhr.responseText);
-                    var container = document.getElementById("container");
-                    var wallpaper = obj[id].URL;
-                    container.style['background'] = "url('" + wallpaper + "')";
-       
-                }    
-                 
-                else
-                {
-                    console.log("Läsfel");
-                }
-            }
-        }
-        
-        xhr.open("get", "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/", true);
-        xhr.send(null);
-        
-       
-       
-       
+        var container = document.getElementById("container");
+        container.style['background'] = "url('" + url + "')";
     },
     
     closeGallery: function()

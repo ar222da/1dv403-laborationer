@@ -1,11 +1,14 @@
 "use strict";
 var Validator = {
     
+    fields: ["Förnamn: ", "Efternamn: ", "Postnummer: ", "E-post: ", "Prismodell: "],
+    
     firstName: false,
     lastName: false,
     postalCode: false,
     email: false,
     
+    submitter: false,
     
     validateFirstName: function(input)
     {
@@ -169,6 +172,76 @@ var Validator = {
             }
         }
 
+    },
+    
+    confirm: function()
+    {
+        
+        var formular = document.getElementById("myForm");
+        formular.style['opacity'] = "0.3";
+        var inputs = document.getElementsByTagName('input');
+        
+            for (var x = 0; x < inputs.length; x++)
+            {
+                inputs[x].disabled = true;
+            }
+        
+        var container = document.getElementById("container");
+        var modalPopup = document.createElement("div");
+        modalPopup.id = "modal";
+        var confirmHeader = document.createElement("h2");
+        var confirmHeaderText = document.createTextNode("Vänligen bekräfta ditt köp");
+        confirmHeader.appendChild(confirmHeaderText);
+        modalPopup.appendChild(confirmHeader);
+        var unsortedListElement = document.createElement("ul");
+        
+            for (var x = 0; x < Validator.fields.length; x++)
+            {
+                var text = document.createTextNode(Validator.fields[x]);
+                var paragraph = document.createElement("p");
+                paragraph.className = "confirmfont";
+                paragraph.appendChild(text);
+                var paragraphB = document.createElement("p");
+                paragraphB.className = "confirmfontB";
+                var textB = document.createTextNode(formular.elements[x].value);
+                paragraphB.appendChild(textB);
+                var listElement = document.createElement("li");
+                listElement.appendChild(paragraph);
+                listElement.appendChild(paragraphB);
+                unsortedListElement.appendChild(listElement);
+            }
+            
+        modalPopup.appendChild(unsortedListElement);
+        var confirm = document.createElement("BUTTON");
+        confirm.className = "submitb";
+        var textConfirm = document.createTextNode("Bekräfta");
+        confirm.appendChild(textConfirm);
+        var cancel = document.createElement("BUTTON");
+        cancel.className = "submitb";
+        var textCancel = document.createTextNode("Avbryt");
+        cancel.appendChild(textCancel);
+        modalPopup.appendChild(confirm);
+        modalPopup.appendChild(cancel);
+        container.appendChild(modalPopup);
+        
+        cancel.onclick = function()
+        {
+            modalPopup.remove();
+            formular.style['opacity'] = "1.0";
+            for (var x = 0; x < inputs.length; x++)
+            {
+                inputs[x].disabled = false;
+            }
+            
+            Validator.submitter = false;
+        }
+        
+        confirm.onclick = function()
+        {
+            Validator.submitter = true;
+            document.getElementById("myForm").submit;
+        }
+    
     }
 
 }
@@ -209,21 +282,21 @@ window.onload = function(){
     }
     
     
+    
     form.onsubmit = function(e){
-        console.log(Validator.firstName, Validator.lastName, Validator.postalCode, Validator.email);
-        if (!Validator.firstName || !Validator.lastName || !Validator.postalCode || !Validator.email)
+        
+        if (Validator.firstName === true && Validator.lastName === true && Validator.postalCode === true && Validator.email ===true)
+        {
+            Validator.confirm();
+        }
+        
+        if (!Validator.submitter)
         {
             return false;
         }
-        
-        else
-        {
-            var background = document.createElement("div");
-            background.id = "background";
-            var container = document.getElementById("container");
-            container.appendChild(background);
-        }
-        
+           
+        form.submit();
     }
     
+ 
 }
