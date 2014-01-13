@@ -76,33 +76,38 @@ var Desktop = {
 
                     var maxThumbWidth = thumbWidthArray[0];
                     var maxThumbHeight = thumbHeightArray[0];
+                    console.log(maxThumbWidth);
                     
-                    var box = document.createElement("div");
-                    box.style.width = maxThumbWidth + 20 + "px";
-                    box.style.height = maxThumbHeight + 20 + "px";
-                    box.style.backgroundColor = "#ff5667";
-                    box.style['margin-left'] = "30px";
-                    box.style['border-radius'] = "5px";
-                    var thumbWidth = obj[0].thumbWidth;
-                    var thumbHeight = obj[0].thumbHeight;
-                    var marginWidth = (((maxThumbWidth + 20) - thumbWidth) / 2);
-                    var marginHeight = (((maxThumbHeight + 20) - thumbHeight) / 2);
+                    borderBackground.style.width = ((maxThumbWidth + 20) * 4) + 40 + 10 + 6 + "px";
+                    gallery.style.width = ((maxThumbWidth + 20) * 4) + 40 + 10 + "px";
+                    topBar.style.width = ((maxThumbWidth + 20) * 4) + 40 + 10 + "px";
+                    bottomBar.style.width = ((maxThumbWidth + 20) * 4) + 40 + 10 + "px";
+
                     
-                    var image = document.createElement("img");
-                    image.src = obj[0].thumbURL;
-                    image.style['margin-left'] = marginWidth + "px";
-                    image.style['margin-top'] = marginHeight + "px";
+                        for (x = 0; x < obj.length; x++)
+                        {
                     
-                    var gall = document.getElementById("gallery");
-                    var back = document.getElementById("borderbackground");
-                    //gall.style.width = (box.style.width * 4) + 40 + "px";
-                    back.style.width = "50px";
-                    
-                    
-                    box.appendChild(image);
-                    
-                    gall.insertBefore(box, gall.lastChild);
-                    
+                            var box = document.createElement("div");
+                            box.id = x;
+                            box.style.width = maxThumbWidth + 20 + "px";
+                            box.style.height = maxThumbHeight + 20 + "px";
+                            box.style.backgroundColor = "#ff5667";
+                            box.style['border-radius'] = "5px";
+                            box.style['margin-left'] = "10px";
+                            box.style['margin-top'] = "10px";
+                            box.style['float'] = "left";
+                            var thumbWidth = obj[x].thumbWidth;
+                            var thumbHeight = obj[x].thumbHeight;
+                            var marginWidth = (((maxThumbWidth + 20) - thumbWidth) / 2);
+                            var marginHeight = (((maxThumbHeight + 20) - thumbHeight) / 2);
+                            gallery.insertBefore(box, gallery.lastChild);
+                            var image = document.createElement("img");
+                            image.src = obj[x].thumbURL;
+                            image.style['margin-left'] = marginWidth + "px";
+                            image.style['margin-top'] = marginHeight + "px";
+                            box.appendChild(image);
+                            gallery.insertBefore(box, gallery.lastChild);
+                        }
                 }
                 
                 else
