@@ -21,18 +21,19 @@ var Desktop = {
         var borderBackground = document.createElement("div");
         borderBackground.id = "borderbackground";
         
-        var topBar = document.createElement("div");
-        topBar.id = "topbar";
-        borderBackground.appendChild(topBar);
-    
+        
+        
         var gallery = document.createElement("div");
         gallery.id = "gallery";
         borderBackground.appendChild(gallery);
         
+        var topBar = document.createElement("div");
+        topBar.id = "topbar";
+        gallery.appendChild(topBar);
         
         var bottomBar = document.createElement("div");
         bottomBar.id = "bottombar";
-        borderBackground.appendChild(bottomBar);
+        gallery.appendChild(bottomBar);
         
         var windowIcon = document.createElement("div");
         windowIcon.id = "windowicon";
@@ -77,15 +78,12 @@ var Desktop = {
 
                     var maxThumbWidth = thumbWidthArray[0];
                     var maxThumbHeight = thumbHeightArray[0];
-                    
+                    console.log(maxThumbWidth);
+
                         for (x = 0; x < obj.length; x++)
                         {
+                    
                             var box = document.createElement("div");
-                            box.onclick = function() 
-                                {
-                                    Desktop.changeWallpaper(this.id);
-                                }
-
                             box.id = x;
                             box.style.width = maxThumbWidth + 20 + "px";
                             box.style.height = maxThumbHeight + 20 + "px";
@@ -105,7 +103,6 @@ var Desktop = {
                             image.style['margin-top'] = marginHeight + "px";
                             box.appendChild(image);
                             gallery.insertBefore(box, gallery.lastChild);
-                            
                         }
                 
                     borderBackground.style.width = ((maxThumbWidth + 20) * 4) + 40 + 10 + 6 + "px";
@@ -115,10 +112,9 @@ var Desktop = {
                     
                     if (borderBackground.scrollHeight > borderBackground.clientHeight)
                     {
-                        borderBackground.style.width = ((maxThumbWidth + 20) * 4) + 57 + 10 + 6 + "px";
-                        gallery.style.width = ((maxThumbWidth + 20) * 4) + 57 + 10 + "px";
-                        topBar.style.width = ((maxThumbWidth + 20) * 4) + 57 + 10 + "px";
-                        bottomBar.style.width = ((maxThumbWidth + 20) * 4) + 57 + 10 + "px";
+                        alert("Hej!");
+                        borderBackground.style.width = ((maxThumbWidth + 20) * 4) + 60 + 10 + 6 + "px";
+                        gallery.style.width = ((maxThumbWidth + 20) * 4) + 60 + 10 + "px";
                         gallery.style['overflow-y'] = "scroll";
                     }
                 
@@ -135,37 +131,6 @@ var Desktop = {
         xhr.open("get", "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/", true);
         xhr.send(null);
         
-    },
-    
-    changeWallpaper: function(id)
-    {
-       var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function()
-        {
-            if (xhr.readyState === 4)
-            {
-                if (xhr.status >=200 && xhr.status < 300 || xhr.status === 304)
-                {
-                    var obj = JSON.parse(xhr.responseText);
-                    var container = document.getElementById("container");
-                    var wallpaper = obj[id].URL;
-                    container.style['background'] = "url('" + wallpaper + "')";
-       
-                }    
-                 
-                else
-                {
-                    console.log("Läsfel");
-                }
-            }
-        }
-        
-        xhr.open("get", "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/", true);
-        xhr.send(null);
-        
-       
-       
-       
     },
     
     closeGallery: function()
